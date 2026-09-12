@@ -102,6 +102,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 12px 24px;
+            position: relative; /* Added for mobile menu positioning */
         }
 
         .brand-logo {
@@ -183,6 +184,14 @@
         .nav-cta:hover {
             background: var(--primary-dark);
             transform: translateY(-2px);
+        }
+        
+        /* Hamburger Menu Style */
+        .hamburger {
+            display: none;
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            cursor: pointer;
         }
 
         /* --- Hero Section --- */
@@ -836,9 +845,30 @@
             .top-bar {
                 display: none;
             }
-            nav ul {
-                display: none;
+            
+            .hamburger {
+                display: block; /* Show hamburger on mobile */
             }
+
+            nav ul {
+                display: none; /* Hide menu by default */
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.98);
+                box-shadow: var(--shadow-md);
+                padding: 20px 0;
+                text-align: center;
+                gap: 15px;
+            }
+
+            /* This class will be toggled by JavaScript */
+            nav ul.active {
+                display: flex; 
+            }
+
             .brand-title h1 {
                 font-size: 1.1rem;
             }
@@ -875,8 +905,14 @@
                     <p>Maternity & Fertility Day Care</p>
                 </div>
             </a>
+            
+            <!-- Hamburger menu button -->
+            <div class="hamburger" id="hamburger">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            
             <nav>
-                <ul>
+                <ul id="nav-menu">
                     <li><a href="#about">About</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="#doctors">Doctors</a></li>
@@ -1277,6 +1313,16 @@
                 el.style.opacity = '1.50'; // hide initially
                 animateOnScroll.observe(el);
             });
+            
+            // 3. Mobile Menu Toggle
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('nav-menu');
+
+            if (hamburger) {
+                hamburger.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                });
+            }
         });
     </script>
 </body>
